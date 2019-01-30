@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Monads</title>
+    </head>
+    <body>
+        <h1>Monads in JS</h1>
+        <p>The aim is to have a natural syntax for monads, instead of using a jQuery like monadic syntax.
+        <br>So we override the async await syntax.
+        </p>
+        <h4>Maybe Monad Example</h4>
+        <pre>
+            <code>
+  // Adds 6
+  async function foo(x) {
+    console.log("foo", x)
+    x = await Maybe.Pure(x+1);
+    x = await Maybe.Pure(x+2);
+    return await Maybe.Pure(x+3);
+  }
+
+  // Like foo, but fails
+  async function foof(x) {
+    console.log("foof", x)
+    x = await Maybe.Nothing();
+    x = await Maybe.Pure(x+2);
+    return await Maybe.Pure(x+3);
+  }
+
+  // Adds 24
+  async function bar(x) {
+    console.log("bar", x)
+    x = await foo(x+1);
+    x = await foof(x+2);
+    return await foo(x+3);
+  }
+
+  // Run
+  var p = Maybe.Run(bar(1));
+
+  // Oof, getting things out is async
+  p.then(function(x) {
+    var el = document.getElementById('result');
+    el.innerHTML += x
+  });
+            </code>
+        </pre>
+        <h4>Result: <div id="result"></div></h4>
+        <script type="module" src="index.js"></script>
+    </body>
+</html>
