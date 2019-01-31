@@ -23,7 +23,7 @@ foo x = do
   x <- pure (x+2)
   pure (x+3)
 
-// Like foo, but fails
+-- Like foo, but fails
 foof :: Int -> MaybeT IO Int
 foof x = do
   lift $ putStrLn ("foof" <> show x)
@@ -31,12 +31,12 @@ foof x = do
   x <- pure (x+2)
   pure (x+3)
 
-// Adds 24
+-- Adds 24
 bar :: Int -> MaybeT IO Int
 bar x = do
   lift $ putStrLn ("bar" <> show x)
   x <- foo (x+1)
-  x <- foo (x+2)
+  x <- foof (x+2)
   foo (x+3)
 ```
 
