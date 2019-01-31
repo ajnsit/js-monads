@@ -78,3 +78,5 @@ bar x = do
   var p = Maybe.Run(bar(1));
   p.then(function(x) {console.log(x)});
 ```
+
+You can see this code [in action here](https://ajnsit.github.io/js-monads/).
